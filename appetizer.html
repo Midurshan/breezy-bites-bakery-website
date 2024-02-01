@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      margin: 0;
+      background-color: #f0f0f0;
+      font-family: Arial, sans-serif;
+    }
+
+    header {
+      text-align: center;
+      padding: 20px;
+      background-color: #333;
+      color: #fff;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .photo-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+
+    .photo {
+      width: calc(33.33% - 20px); /* Adjust the percentage based on the number of photos per row */
+      margin-bottom: 20px;
+      overflow: hidden;
+      border-radius: 8px;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+      position: relative;
+      transition: transform 0.3s;
+      cursor: pointer;
+    }
+
+    .photo:hover {
+      transform: scale(1.1);
+    }
+
+    .photo img {
+      width: 100%;
+      height: 70%;
+      object-fit: cover;
+      border-radius: 8px 8px 0 0;
+    }
+
+    .photo-details {
+      padding: 10px;
+      background-color: #fff;
+      border-radius: 0 0 8px 8px;
+    }
+
+    .photo-name {
+      font-size: 16px;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    .photo-price {
+      color: #009688;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    .add-button {
+      position: absolute;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #009688;
+      color: #fff;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    /* Modal styles */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      justify-content: center;
+      align-items: center;
+      z-index: 1;
+    }
+
+    .modal-content {
+      max-width: 80%;
+      max-height: 80%;
+      overflow: hidden;
+    }
+
+    .modal img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .close-button {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 24px;
+      color: #fff;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    Appetizers
+  </header>
+
+  <div class="photo-container">
+
+    <div class="photo" onclick="openModal('Imeges/appetizers7.jpeg', 'Appetizer Yellow', 'LKR200 per peice')">
+      <img src="Imeges/appetizers7.jpeg" alt="appetizer1">
+      <div class="photo-details">
+        <div class="photo-name">Appetizer Yellow</div>
+        <div class="photo-price">LKR200 per peice</div>
+        <button class="add-button">Add Item</button>
+      </div>
+    </div>
+
+    <div class="photo" onclick="openModal('Imeges/Appetizers8.jpg', 'Veggie Burger', 'LKR180 per peice')">
+      <img src="Imeges/Appetizers8.jpg" alt="appetizer2">
+      <div class="photo-details">
+        <div class="photo-name">Appetizer Green Chillr</div>
+        <div class="photo-price">LKR180 per peice</div>
+        <button class="add-button">Add Item</button>
+      </div>
+    </div>
+
+    <div class="photo" onclick="openModal('Imeges/Appetizers9.jpg', 'Appetizer Yellow Chill', 'LKR190 per peice')">
+      <img src="Imeges/Appetizers9.jpg" alt="appetizer3">
+      <div class="photo-details">
+        <div class="photo-name">Appetizer Yellow Chill</div>
+        <div class="photo-price">LKR190 per peice</div>
+        <button class="add-button">Add Item</button>
+      </div>
+    </div>
+
+    <div class="photo" onclick="openModal('Imeges/Appetizer4.jpg', 'Appetizer Red', 'LKR220 per peice')">
+      <img src="Imeges/Appetizer4.jpg" alt="appetizer4">
+      <div class="photo-details">
+        <div class="photo-name">Appetizer Red</div>
+        <div class="photo-price">LKR220 per peice</div>
+        <button class="add-button">Add Item</button>
+      </div>
+    </div>
+
+    <div class="photo" onclick="openModal('Imeges/Appetizer5.jpg', 'Appetizer Egg Chill', 'LKR210 per peice')">
+      <img src="Imeges/Appetizer5.jpg" alt="appetizer5">
+      <div class="photo-details">
+        <div class="photo-name">Appetizer Egg Chill</div>
+        <div class="photo-price">LKR210 per peice</div>
+        <button class="add-button">Add Item</button>
+      </div>
+    </div>
+
+    <div class="photo" onclick="openModal('Imeges/Appetizer6.jpg', 'Spicy Appetizer', 'LKR190 per peice')">
+      <img src="Imeges/Appetizer6.jpg" alt="appetizer6">
+      <div class="photo-details">
+        <div class="photo-name">Spicy Appetizer</div>
+        <div class="photo-price">LKR190 per peice</div>
+        <button class="add-button">Add Item</button>
+      </div>
+    </div>
+
+
+  </div>
+
+  <!-- Modal -->
+  <div id="myModal" class="modal">
+    <span class="close-button" onclick="closeModal()">&times;</span>
+    <div class="modal-content">
+      <img id="modalImage" src="" alt="Burger">
+    </div>
+  </div>
+
+  <script>
+    function openModal(imageSrc, itemName, itemPrice) {
+      document.getElementById("modalImage").src = imageSrc;
+      document.getElementById("myModal").style.display = "flex";
+    }
+
+    function closeModal() {
+      document.getElementById("myModal").style.display = "none";
+    }
+  </script>
+
+</body>
+</html>
